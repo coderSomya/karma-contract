@@ -1,0 +1,41 @@
+enum Outcome{
+    YES,
+    NO
+}
+
+record Bet{
+    side: Outcome,
+    quantity: u64
+}
+
+record Market{
+    creator: string,
+    id: string,
+    question: string,
+    num_yes: u64,
+    num_no: u64,
+    liquidity: f64, // LMSR b
+    resolved: bool,
+    outcome: option<Outcome>,
+    voters: dict<string, Bet>
+}
+
+record User{
+    id: string,
+    bio: string,
+    balance: f64,
+    history: list<string> // ids of all the markets this user has voted in
+}
+
+interface Karma{
+    mutate func register_user(bio: string);
+    mutate func add_market(question: string, liquidity: f64);
+    query func get_users() -> list<User>;
+    query func get_markets() -> list<Market>;
+    query func get_user(id: string) -> option<User>;
+    query func get_market(id: string) -> option<Market>;
+    mutate func bet(market_id: string, side: Outcome) -> result<(), string>;
+    mutate func resolve(market_id: string) -> result<(), string>;
+    mutate func deposit(amount: f64);
+    query func get_cost(market_id: string) -> tuple<f64, f64>
+}
