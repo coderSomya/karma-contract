@@ -14,7 +14,7 @@ use user::User;
 
 use crate::elements::{Bet, lmsr_price};
 
-trait Drishti {
+trait Karma {
     fn new() -> Result<Self, String>
     where
         Self: Sized;
@@ -31,7 +31,7 @@ trait Drishti {
 }
 
 #[derive(Serialize, Deserialize, WeilType)]
-pub struct DrishtiContractState {
+pub struct KarmaContractState {
     // define your contract state here!
     base_id: WeilIdGenerator,
     users: WeilMap<String, User>, // user_id -> user
@@ -41,7 +41,7 @@ pub struct DrishtiContractState {
 }
 
 #[smart_contract]
-impl Drishti for DrishtiContractState {
+impl Karma for KarmaContractState {
     #[constructor]
     fn new() -> Result<Self, String>
     where
