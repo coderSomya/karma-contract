@@ -68,6 +68,6 @@ impl Market{
     }
 
     pub fn has_already_voted(&self, user_id: String) -> bool {
-        self.voters.get(&user_id).is_none()
+        self.voters.get(&user_id).is_some()
     }
 }

@@ -1,7 +1,7 @@
 
 use serde::{Deserialize, Serialize};
 use weil_macros::{constructor, mutate, query, smart_contract, WeilType};
-use weil_rs::{collections::{WeilId, WeilIdGenerator, map::WeilMap, vec::WeilVec}, runtime::Runtime};
+use weil_rs::{collections::{WeilId, map::WeilMap, vec::WeilVec}, runtime::Runtime};
 
 mod market;
 use market::Market;
@@ -33,7 +33,6 @@ trait Karma {
 #[derive(Serialize, Deserialize, WeilType)]
 pub struct KarmaContractState {
     // define your contract state here!
-    base_id: WeilIdGenerator,
     users: WeilMap<String, User>, // user_id -> user
     markets: WeilMap<String, Market>, // market_id -> market
     user_ids: WeilVec<String>,
@@ -47,18 +46,11 @@ impl Karma for KarmaContractState {
     where
         Self: Sized,
     {
-        let mut base_id = WeilIdGenerator::new(WeilId(1));
-        let id_1 = base_id.next_id();
-        let id_2 = base_id.next_id();
-        let id_3 = base_id.next_id();
-        let id_4 = base_id.next_id();
-
         Ok(Self{
-            base_id,
-            users: WeilMap::new(id_1),
-            markets: WeilMap::new(id_2),
-            user_ids: WeilVec::new(id_3),
-            market_ids: WeilVec::new(id_4)
+            users: WeilMap::new(WeilId(1)),
+            markets: WeilMap::new(WeilId(2)),
+            user_ids: WeilVec::new(WeilId(3)),
+            market_ids: WeilVec::new(WeilId(4))
         })
     }
 
