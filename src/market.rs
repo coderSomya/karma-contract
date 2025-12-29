@@ -19,10 +19,12 @@ pub struct Market {
 }
 
 impl Market{
-    pub fn new(question: String, liquidity: f64) -> Self{
+    pub fn new(counter: String, question: String, liquidity: f64) -> Self{
+        let market_id = format!("market_{}", counter);
+        
         let market = Market{
             creator: Runtime::sender(),
-            id: Runtime::uuid(),
+            id: market_id,
             question: question,
             num_yes: 0,
             num_no: 0,

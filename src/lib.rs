@@ -33,6 +33,7 @@ trait Karma {
 #[derive(Serialize, Deserialize, WeilType)]
 pub struct KarmaContractState {
     // define your contract state here!
+    counter: u64,
     users: WeilMap<String, User>, // user_id -> user
     markets: WeilMap<String, Market>, // market_id -> market
     user_ids: WeilVec<String>,
@@ -47,6 +48,7 @@ impl Karma for KarmaContractState {
         Self: Sized,
     {
         Ok(Self{
+            counter: 0,
             users: WeilMap::new(WeilId(1)),
             markets: WeilMap::new(WeilId(2)),
             user_ids: WeilVec::new(WeilId(3)),
@@ -66,8 +68,10 @@ impl Karma for KarmaContractState {
 
     #[mutate]
     async fn add_market(&mut self, question: String, liquidity: f64) {
-        let market = Market::new(question, liquidity);
+        let counter = self.counter;
+        let market = Market::new(counter.to_string(), question, liquidity);
         let market_id = market.id.clone();
+        self.counter+=1;
 
         self.markets.insert(market_id.clone(), market);
         self.market_ids.push(market_id)
