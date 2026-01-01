@@ -27,6 +27,7 @@ record User{
     history: list<string> // ids of all the markets this user has voted in
 }
 
+@webserver
 interface Karma{
     mutate func register_user(bio: string);
     mutate func add_market(question: string, liquidity: f64);
