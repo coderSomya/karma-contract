@@ -16,7 +16,7 @@ impl User{
         let user = User{
             id: Runtime::sender(),
             bio: bio,
-            balance: 0.0,
+            balance: 100.0,
             history: Vec::new()
         };
 

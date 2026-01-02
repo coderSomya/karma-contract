@@ -204,12 +204,9 @@ impl Karma for KarmaContractState {
 
     #[mutate]
     async fn deposit(&mut self, amount: f64) {
-        let Some(mut user) = self.users.get(&Runtime::sender()) else {
-            return;
-        };
-
-        user.deposit(amount);
-        self.users.insert(Runtime::sender(), user);
+        // TODO: implement a way for users to 
+        // convert their tokens on weilchain to 
+        // balance in karma
     }
 
     #[query]
